@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9b9d7661-74e3-416b-aa6b-9ddfa2364a9a" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="270sENyAuFnLpninbdSfZK7vc1p" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/game" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/CraftMania-master" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="entity.objects" />
+      <recent name="Position" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\henri\OneDrive\Dokumenter\Universitetet\Vår 2022\INF101\Semester_oppgave_2\Henrik.F.Wilhelmsen_sem2_open\src\main\resources\sprites\entities\main_character\animations" />
+      <recent name="C:\Users\henri\OneDrive\Dokumenter\Universitetet\Vår 2022\INF101\Semester_oppgave_2\Henrik.F.Wilhelmsen_sem2_open\target\classes\sprites\entities\main_character\animations" />
+      <recent name="C:\Users\henri\OneDrive\Dokumenter\Universitetet\Vår 2022\INF101\Semester_oppgave_2\Henrik.F.Wilhelmsen_sem2_open\src\main\resources\sprites\items\axe\holdAnimation" />
+      <recent name="C:\Users\henri\OneDrive\Dokumenter\Universitetet\Vår 2022\INF101\Semester_oppgave_2\Henrik.F.Wilhelmsen_sem2_open\src\main\resources\sprites\items\axe" />
+      <recent name="C:\Users\henri\OneDrive\Dokumenter\Universitetet\Vår 2022\INF101\Semester_oppgave_2\Henrik.F.Wilhelmsen_sem2_open\src\main\resources\sprites\Childs\what" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\henri\OneDrive\Dokumenter\Universitetet\Vår 2022\INF101\Semester_oppgave_2\Henrik.F.Wilhelmsen_sem2_open\src\main\resources\sprites\items\axe" />
+      <recent name="C:\Users\henri\OneDrive\Dokumenter\Universitetet\Vår 2022\INF101\Semester_oppgave_2\Henrik.F.Wilhelmsen_sem2_open\src\main\resources\sprites\tiles\island" />
+      <recent name="C:\Users\henri\OneDrive\Dokumenter\Universitetet\Vår 2022\INF101\Semester_oppgave_2\Henrik.F.Wilhelmsen_sem2_open\src\main\resources\sprites\items" />
+      <recent name="C:\Users\henri\OneDrive\Dokumenter\Universitetet\Vår 2022\INF101\Semester_oppgave_2\Henrik.F.Wilhelmsen_sem2_open\src\main\resources\sprites" />
+      <recent name="C:\Users\henri\OneDrive\Dokumenter\Universitetet\Vår 2022\INF101\Semester_oppgave_2\Henrik.F.Wilhelmsen_sem2_open\src\main\resources\sprites\" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="core" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.GameLauncher">
+    <configuration name="GameLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GameLauncher" />
+      <module name="Henrik.F.Wilhelmsen_sem2_open" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="dictTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Henrik.F.Wilhelmsen_sem2_open" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="core" />
+      <option name="MAIN_CLASS_NAME" value="core.dictTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="dictTest.getValue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Henrik.F.Wilhelmsen_sem2_open" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="core" />
+      <option name="MAIN_CLASS_NAME" value="core.dictTest" />
+      <option name="METHOD_NAME" value="getValue" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.GameLauncher" />
+        <item itemvalue="JUnit.dictTest" />
+        <item itemvalue="JUnit.dictTest.getValue" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9b9d7661-74e3-416b-aa6b-9ddfa2364a9a" name="Changes" comment="" />
+      <created>1648468227345</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1648468227345</updated>
+      <workItem from="1648468228820" duration="43331000" />
+      <workItem from="1648545188539" duration="12356000" />
+      <workItem from="1648557707759" duration="1548000" />
+      <workItem from="1648559299296" duration="127000" />
+      <workItem from="1648559450657" duration="6017000" />
+      <workItem from="1648628561959" duration="1227000" />
+      <workItem from="1648629934785" duration="393000" />
+      <workItem from="1648635724410" duration="2310000" />
+      <workItem from="1648646438230" duration="1053000" />
+      <workItem from="1648647523723" duration="1809000" />
+      <workItem from="1648651083357" duration="434000" />
+      <workItem from="1648651557945" duration="129000" />
+      <workItem from="1648657234448" duration="1448000" />
+      <workItem from="1648661148590" duration="3396000" />
+      <workItem from="1648714315624" duration="6694000" />
+      <workItem from="1648724268101" duration="700000" />
+      <workItem from="1649279897096" duration="69000" />
+      <workItem from="1649280108505" duration="30000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/gfx/ResourceLibrary.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="gfx.SpriteSet" memberName="animationSheets" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="parent" />
+        <watch expression="childFolders" />
+        <watch expression="((Dict)((RecourceLibrary)this).sprites).values" custom="core.Dict,gfx.RecourceLibrary" />
+        <watch expression="((Dict)((RecourceLibrary)this).sprites).values" custom="core.Dict,gfx.RecourceLibrary" />
+        <watch expression="((java.util.ArrayList)((Dict)((ArrayList)((Dict)((RecourceLibrary)this).sprites).values).get(0)).values).get(0)" custom="core.Dict,gfx.RecourceLibrary,java.util.ArrayList" />
+        <watch expression="((Dict)((RecourceLibrary)this).sprites).values" custom="core.Dict,gfx.RecourceLibrary" />
+        <watch expression="this" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Henrik_F_Wilhelmsen_sem2_open$GameLauncher.ic" NAME="GameLauncher Coverage Results" MODIFIED="1648519653343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
