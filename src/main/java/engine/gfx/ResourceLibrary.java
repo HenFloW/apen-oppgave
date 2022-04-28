@@ -41,23 +41,21 @@ public class ResourceLibrary {
 
     private File[] getFilesInFolder(String path) {
         URL url = this.getClass().getClassLoader().getResource(path);
-        File file = null;
+        File file;
         try {
-            file = new File(url.toURI());
-            File[] directories = file.listFiles(f -> f.isFile());
-            return directories;
+            file = new File(url != null ? url.toURI() : null);
+            return file.listFiles(File::isFile);
         } catch (URISyntaxException e) {
             file = new File(url.getPath());
         }
-        File[] directories = file.listFiles(f -> f.isFile());
-        return directories;
+        return file.listFiles(File::isFile);
     }
 
     private String[] getChildFolders(String path) {
         URL url = this.getClass().getClassLoader().getResource(path);
-        File file = null;
+        File file;
         try {
-            file = new File(url.toURI());
+            file = new File(url != null ? url.toURI() : null);
         } catch (URISyntaxException e) {
             file = new File(url.getPath());
         }

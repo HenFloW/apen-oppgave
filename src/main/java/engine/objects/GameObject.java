@@ -18,20 +18,22 @@ public abstract class GameObject {
 
     protected List<GameObject> children;
     private ArrayList<GameObject> childRemoveQueue;
-
     private GameObject parent;
+
     public boolean destructable;
     public boolean collideable = true;
 
     public GameObject(){
         this.position = new Position(0,0);
         this.objectPoint = new Position(0,0);
+
         this.size = new Size(100,100);
         this.collider = new Collider2D(0,0,size.getWidth(),size.getHeight());
+
         this.children = new ArrayList<>();
         this.childRemoveQueue = new ArrayList<>();
     }
-
+    
     public abstract void update(GameState state);
 
     public abstract void render(Graphics g);

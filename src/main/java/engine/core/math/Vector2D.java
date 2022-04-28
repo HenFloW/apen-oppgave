@@ -1,5 +1,7 @@
 package engine.core.math;
 
+import java.text.DecimalFormat;
+
 public class Vector2D {
     private double x, y;
 
@@ -49,9 +51,10 @@ public class Vector2D {
 
     @Override
     public String toString() {
+        DecimalFormat df = new DecimalFormat("0.0###");
         return "Vector2D{" +
-                "x=" + x +
-                ", y=" + y +
+                "x=" + df.format(x).replace(',', '.') +
+                ", y=" + df.format(y).replace(',', '.') +
                 '}';
     }
 }

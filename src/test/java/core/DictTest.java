@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class dictTest {
+public class DictTest {
     @Test
     void getValue(){
         Dict<String, Integer> test = new Dict<>();

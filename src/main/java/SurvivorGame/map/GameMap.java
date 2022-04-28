@@ -21,10 +21,16 @@ public class GameMap extends Grid<Tile> {
         return this.getRow()*this.objectType.getSprite().getHeight();
     }
 
-    @Override
     public boolean isOnGrid(GameObject object) {
-        return object.getPosition().getX() + object.getSprite().getWidth() < getWidth()
-                && object.getPosition().getY() + object.getSprite().getHeight() < getHeight();
+        double objectX = object.getPosition().getX();
+        double objectY = object.getPosition().getY();
+
+        double objectWidth = object.getSprite().getWidth();
+        double objectHeight = object.getSprite().getHeight();
+
+        return objectX + objectWidth <= getWidth()
+                && objectX + objectHeight <= getHeight()
+                && objectX >= 0 && objectY >= 0;
     }
 
     public int getTileSize() {

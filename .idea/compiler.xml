@@ -9,5 +9,8 @@
         <module name="Henrik.F.Wilhelmsen_sem2_open" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="apen-oppgave-henrik.f.wilhelmsen" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -13,6 +13,10 @@ public class Tile {
                             ImageUtils.loadImage(resourceLibrary.getFileFromKey("sprites/tiles/island", "grass")));
     }
 
+    public Tile() {
+        this.sprite = null;
+    }
+
     public BufferedImage getSprite() {
         return sprite;
     }

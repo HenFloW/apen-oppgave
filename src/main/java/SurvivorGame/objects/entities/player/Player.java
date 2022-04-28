@@ -6,6 +6,7 @@ import engine.core.math.Position;
 import engine.game.GameState;
 import engine.gfx.ResourceLibrary;
 import engine.gfx.Animation;
+import engine.objects.Item;
 import engine.objects.moving.MovingEntity;
 import engine.objects.GameObject;
 
@@ -109,6 +110,16 @@ public class Player extends MovingEntity {
         drawSprite(g,animation.getSprite());
         for (GameObject child: this.children) {
             child.render(g);
+        }
+        if (state.getGameObjects().stream()
+                .filter(gameObject -> gameObject instanceof Item)
+                .anyMatch(
+                        gameObject
+                                ->
+                                gameObject.getObjectPoint().length(objectPoint) <= 40)){
+            g.setColor(Color.white);
+            g.drawString("Press 'E' to", 20, 10);
+            g.drawString("pick up", 30, 20);
         }
     }
 

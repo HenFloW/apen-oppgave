@@ -1,14 +1,12 @@
 package engine.core.utils;
 
-import engine.objects.GameObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Grid<T> {
-    protected List<T> grid;
-    protected final int row;
-    protected final int col;
+public class Grid<T> {
+    private List<T> grid;
+    private final int row;
+    private final int col;
     protected final T objectType;
 
     public Grid(int rows, int cols, T type){
@@ -17,6 +15,10 @@ public abstract class Grid<T> {
         this.col = cols;
         this.objectType = type;
         init(type);
+    }
+
+    public Grid(int x, int y){
+        this(x,y,null);
     }
 
     private void init(T type) {
@@ -34,9 +36,11 @@ public abstract class Grid<T> {
         return row;
     }
 
+    public void set(int x, int y, T object){
+        grid.set(x+col*y, object);
+    }
+
     public T get(int x, int y){
         return grid.get(x+y*col);
     }
-
-    public abstract boolean isOnGrid(GameObject object);
 }
