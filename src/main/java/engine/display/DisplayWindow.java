@@ -39,7 +39,7 @@ public class DisplayWindow extends JFrame {
         add(canvas);
         pack();
 
-        canvas.createBufferStrategy(this.frameBuffer);
+        canvas.createBufferStrategy(this.frameBuffer); //buffer-strategy is a way to prerender a frame so the game can seamlessly switch to the next frame
 
         setLocationRelativeTo(null);
         setVisible(true);
@@ -49,6 +49,11 @@ public class DisplayWindow extends JFrame {
         return windowSize;
     }
 
+    /**
+     * this function does all the rendering logic of a scene depending on the state it gets
+     * it also call for the renderer render which is in charge drawing all the games objects
+     * @param state takes in the game-state
+     */
     public void render(GameState state) {
         BufferStrategy bufferStrategy = canvas.getBufferStrategy();
         Graphics graphics = bufferStrategy.getDrawGraphics();

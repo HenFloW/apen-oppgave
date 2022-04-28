@@ -32,8 +32,9 @@ public class Camera {
                     objectPosition.intX() - viewBound.getWidth()/2 + (int)(objectInFocus.get().getSprite().getWidth()/2),
                     objectPosition.intY() - viewBound.getHeight()/2 + (int)(objectInFocus.get().getSprite().getHeight()/2));
 
-            bounderies(state);
-            getViewBounds(viewBound.width, viewBound.height);
+            boundaries(state); //This is to lock the view within the map boundaries
+            getViewBounds(viewBound.width, viewBound.height);   //This is used to set a rectangle in the position of the camera
+                                                                // Useful if we will check if an object is in view of the camera
         }
     }
 
@@ -41,7 +42,7 @@ public class Camera {
         this.viewBound = new Rectangle(position.intX(), position.intY(), x, y);
     }
 
-    private void bounderies(GameState state) {
+    private void boundaries(GameState state) {
         GameMap gameMap = state.getGameMap();
         if(position.getX() < 0){
             position.setX(0);
@@ -66,8 +67,8 @@ public class Camera {
         return viewBound;
     }
 
-    public boolean isInView(GameObject gameObject) {
-        if(gameObject.getSprite() != null) {
+    public boolean isInView(GameObject gameObject) { //This function uses view bounds and check if the sprite of the object is in view of the camera
+        if(gameObject.getSprite() != null) {         // This is for optimizing the rendering methods to only render objects in view
             return viewBound.intersects(
                     gameObject.getPosition().intX(),
                     gameObject.getPosition().intY(),
