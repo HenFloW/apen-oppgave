@@ -3,7 +3,6 @@ package SurvivorGame.objects.items;
 import SurvivorGame.objects.entities.player.Player;
 import SurvivorGame.objects.entities.player.actions.Dropping;
 import SurvivorGame.objects.entities.player.actions.UseAction;
-import SurvivorGame.state.PlayState;
 import engine.core.math.Position;
 import engine.game.GameState;
 import engine.gfx.Animation;

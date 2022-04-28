@@ -18,7 +18,17 @@ public class PlayState extends GameState {
 
     public PlayState(Input input, DisplayWindow window){
         super(input,window);
+        initGameObjects();
+    }
 
+    public void update(){
+        for (GameObject gameObject : gameObjects) {
+            gameObject.update(this);
+        }
+        super.update();
+    }
+
+    private void initGameObjects(){
         this.gameMap = new GameMap(new Size(40, 25), resourceLibrary);
         this.player = new Player(resourceLibrary, new PlayerController(input), this);
         this.camera.setFocus(player);
@@ -49,13 +59,6 @@ public class PlayState extends GameState {
 
         Axe axe = new Axe(this);
         gameObjects.add(axe);
-    }
-
-    public void update(){
-        for (GameObject gameObject : gameObjects) {
-            gameObject.update(this);
-        }
-        super.update();
     }
 
 }

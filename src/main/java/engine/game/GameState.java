@@ -1,5 +1,6 @@
 package engine.game;
 
+import engine.controller.DebugController;
 import engine.controller.Input;
 import engine.core.math.Size;
 import engine.display.Camera;
@@ -14,17 +15,21 @@ import java.util.List;
 public abstract class GameState {
     public boolean debug = true;
     protected GameMap gameMap;
+
     protected ArrayList<GameObject> gameObjects;
     protected ArrayList<GameObject> objRemoveQueue;
     protected ArrayList<GameObject> objAddQueue;
+
     protected Input input;
     protected ResourceLibrary resourceLibrary;
     protected Camera camera;
     protected DisplayWindow display;
 
+    public DebugController debugController;
+
     public GameState(Input input, DisplayWindow display){
         this.input = input;
-
+        this.debugController = new DebugController(input);
         this.gameObjects = new ArrayList<>();
         this.objAddQueue = new ArrayList<>();
         this.objRemoveQueue = new ArrayList<>();
@@ -36,6 +41,7 @@ public abstract class GameState {
 
     public void update(){
         camera.update(this);
+        debugController.update();
     }
 
     public List<GameObject> getGameObjects() {
@@ -52,10 +58,6 @@ public abstract class GameState {
 
     public ResourceLibrary getResourceLibrary() {
         return resourceLibrary;
-    }
-
-    public DisplayWindow getDisplayWindow() {
-        return display;
     }
 
     public void removeGameObject(GameObject gameObject) {

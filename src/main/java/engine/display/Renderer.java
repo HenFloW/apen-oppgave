@@ -1,14 +1,14 @@
 package engine.display;
 
-import engine.controller.DebugController;
-import engine.core.math.Position;
 import SurvivorGame.map.GameMap;
+import SurvivorGame.objects.entities.Rock;
+import SurvivorGame.objects.entities.TreeEntity;
+import engine.core.math.Position;
 import engine.game.GameState;
+import engine.game.IGame;
 import engine.objects.GameObject;
 import engine.objects.Item;
 import engine.objects.moving.MovingEntity;
-import SurvivorGame.objects.entities.Rock;
-import SurvivorGame.objects.entities.TreeEntity;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,25 +16,22 @@ import java.util.Comparator;
 
 public class Renderer {
     private final int VIEW_BOUND_PERIMETER = 1;
-    private DebugController debugController;
+    private GameState state;
 
-    public Renderer(DisplayWindow displayWindow) {
-        this.debugController = displayWindow.debugController();
-    }
+    public Renderer() {}
 
-    public void render(GameState state, Graphics graphics){
-        debugController.update();
-
+    public void render(IGame game, Graphics graphics){
+        this.state = game.getGameState();
         renderMap(state, graphics);
         renderObjects(state, graphics);
 
-        if(debugController.renderLines){
+        if(state.debugController.renderLines){
             renderLines(state, graphics);
         }
-        if(debugController.renderColliders){
+        if(state.debugController.renderColliders){
             renderBoxColliders(state, graphics);
         }
-        if(debugController.renderObjectPoint) {
+        if(state.debugController.renderObjectPoint) {
             renderPositions(state, graphics);
         }
 

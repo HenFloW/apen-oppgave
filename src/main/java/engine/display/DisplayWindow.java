@@ -1,9 +1,8 @@
 package engine.display;
 
-import engine.controller.DebugController;
 import engine.controller.Input;
 import engine.core.math.Size;
-import engine.game.GameState;
+import engine.game.IGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,13 +18,12 @@ public class DisplayWindow extends JFrame {
     private boolean isResizeable = false;
     private final int frameBuffer = 2;
 
-    private DebugController debugController;
 
     public DisplayWindow(Size windowSize, String windowName, Input input){
         this.windowName = windowName;
         this.windowSize = windowSize;
-        this.debugController = new DebugController(input);
-        this.renderer = new Renderer(this);
+
+        this.renderer = new Renderer();
         this.addKeyListener(input);
         setTitle(this.windowName);
 
@@ -52,19 +50,15 @@ public class DisplayWindow extends JFrame {
     /**
      * this function does all the rendering logic of a scene depending on the state it gets
      * it also call for the renderer render which is in charge drawing all the games objects
-     * @param state takes in the game-state
+     * @param game
      */
-    public void render(GameState state) {
+    public void render(IGame game) {
         BufferStrategy bufferStrategy = canvas.getBufferStrategy();
         Graphics graphics = bufferStrategy.getDrawGraphics();
 
-        renderer.render(state, graphics);
+        renderer.render(game, graphics);
 
         graphics.dispose();
         bufferStrategy.show();
-    }
-
-    public DebugController debugController() {
-        return debugController;
     }
 }

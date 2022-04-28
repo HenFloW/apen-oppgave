@@ -1,5 +1,6 @@
 package engine.display;
 
+import SurvivorGame.state.PlayState;
 import engine.core.math.Position;
 import engine.core.math.Size;
 import SurvivorGame.map.GameMap;
@@ -43,18 +44,20 @@ public class Camera {
     }
 
     private void boundaries(GameState state) {
-        GameMap gameMap = state.getGameMap();
-        if(position.getX() < 0){
-            position.setX(0);
-        }
-        if(position.getX() + viewBound.getWidth() >= gameMap.getWidth()){
-            position.setX(gameMap.getWidth() -  viewBound.width);
-        }
-        if(position.getY() < 0){
-            position.setY(0);
-        }
-        if(position.getY() + viewBound.getHeight() >= gameMap.getHeight()){
-            position.setY(gameMap.getHeight() - viewBound.height);
+        if(state instanceof PlayState playState){
+        GameMap gameMap = playState.getGameMap();
+            if(position.getX() < 0){
+                position.setX(0);
+            }
+            if(position.getX() + viewBound.getWidth() >= gameMap.getWidth()){
+                position.setX(gameMap.getWidth() -  viewBound.width);
+            }
+            if(position.getY() < 0){
+                position.setY(0);
+            }
+            if(position.getY() + viewBound.getHeight() >= gameMap.getHeight()){
+                position.setY(gameMap.getHeight() - viewBound.height);
+            }
         }
 
     }

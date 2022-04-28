@@ -1,8 +1,6 @@
 package engine.gfx;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 public class ImageSheet {
     private BufferedImage image;

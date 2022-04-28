@@ -1,11 +1,11 @@
 package SurvivorGame;
 
+import SurvivorGame.state.PlayState;
 import engine.controller.Input;
 import engine.core.math.Size;
 import engine.display.DisplayWindow;
-import engine.game.IGame;
 import engine.game.GameState;
-import SurvivorGame.state.PlayState;
+import engine.game.IGame;
 
 public class Survivor implements IGame {
 
@@ -17,6 +17,7 @@ public class Survivor implements IGame {
         this.input = new Input();
         this.display = new DisplayWindow(new Size(width, height), name, input);
         this.currentState = new PlayState(input, display);
+
     }
     @Override
     public void update() {
@@ -25,7 +26,7 @@ public class Survivor implements IGame {
 
     @Override
     public void render() {
-        display.render(currentState);
+        display.render(this);
     }
 
     @Override
@@ -33,4 +34,8 @@ public class Survivor implements IGame {
         currentState.cleanup();
     }
 
+    @Override
+    public GameState getGameState() {
+        return currentState;
+    }
 }

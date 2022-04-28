@@ -17,4 +17,6 @@ public interface IGame {
      * from the GameLoop
      */
     void cleanup();
+
+    GameState getGameState();
 }

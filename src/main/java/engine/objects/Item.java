@@ -1,7 +1,6 @@
 package engine.objects;
 
 import engine.core.utils.Dict;
-import engine.objects.GameObject;
 
 import java.awt.image.BufferedImage;
 
