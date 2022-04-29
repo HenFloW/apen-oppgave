@@ -3,6 +3,7 @@ package SurvivorGame.objects.entities.player;
 import SurvivorGame.objects.entities.player.actions.Dropping;
 import SurvivorGame.objects.entities.player.actions.UseAction;
 import engine.core.math.Position;
+import engine.core.utils.Collider2D;
 import engine.game.GameState;
 import engine.gfx.ResourceLibrary;
 import engine.gfx.Animation;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 public class Player extends MovingEntity {
     private GameState state;
+    private Collider2D actionCollider;
 
     public Player(ResourceLibrary resourceLibrary, PlayerController controller, GameState state){
         super(controller, resourceLibrary);
@@ -39,7 +41,7 @@ public class Player extends MovingEntity {
         spriteSet.get("man_idle").setAnimationSpeed(10);
         spriteSet.get("man_action").setAnimationSpeed(4);
 
-        this.animation = new Animation(spriteSet);
+        this.animation = new Animation(spriteSet, this);
         this.animation.playAnimation("man_idle");
         this.animation.update(direction);
 
@@ -49,11 +51,16 @@ public class Player extends MovingEntity {
         this.collider.setOffsets(40,55);
         this.collider.setSize(20, 25);
 
+        this.actionCollider = new Collider2D(this);
+        this.actionCollider.setOffsets(20, 30);
+        this.actionCollider.setSize(60,70);
+
     }
 
     @Override
     public void update(GameState state) {
         super.update(state);
+        actionCollider.update(this);
         var playerController = (PlayerController) controller;
 
         if(action.isEmpty()){
@@ -82,7 +89,7 @@ public class Player extends MovingEntity {
                         .filter(gameObject -> !gameObject.equals(this))
                         .filter(gameObject -> !children.contains(gameObject))
                         .forEach(gameObject -> {
-                    if(objectPoint.length(gameObject.getObjectPoint()) <= 40) {
+                    if(gameObject.getCollider().intersects(actionCollider)) {
                         gameObject.action(state, this);
                     }
                 } );

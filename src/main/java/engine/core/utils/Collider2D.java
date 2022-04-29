@@ -17,10 +17,18 @@ public class Collider2D extends Rectangle {
     }
 
     public void setOffsets(int x, int y){
+        if(offsetX == 0){
+            this.x += x;
+        } else {
+            this.x += -offsetX+x;
+        }
+        if(offsetY == 0){
+            this.y += y;
+        } else {
+            this.y += -offsetY+y;
+        }
         this.offsetX = x;
         this.offsetY = y;
-        this.x += x;
-        this.y += y;
     }
 
     public void update(GameObject object) {

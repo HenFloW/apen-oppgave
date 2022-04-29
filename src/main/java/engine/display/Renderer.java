@@ -113,7 +113,7 @@ public class Renderer {
     private void sortByPosition(GameState state) {
         state.getGameObjects()
                 .sort(Comparator
-                        .comparing(x -> ((GameObject) x).getObjectPoint().intY()));
+                        .comparing(x -> x.getObjectPoint().intY()));
 
     }
 

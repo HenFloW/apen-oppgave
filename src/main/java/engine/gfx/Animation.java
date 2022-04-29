@@ -1,6 +1,8 @@
 package engine.gfx;
 
 import engine.core.math.Direction;
+import engine.core.math.Size;
+import engine.objects.GameObject;
 
 import java.awt.image.BufferedImage;
 
@@ -11,24 +13,25 @@ public class Animation {
     private int animationHoldFrames;
     private int currentFrameTime;
 
-    private int gridSize;
+    private Size gridSize;
     private int directionIndex;
     private int frameIndex;
     private String currentAnimationName;
 
-    public Animation(SpriteSet spriteSet){
+    public Animation(SpriteSet spriteSet, GameObject object){
         this.spriteSet = spriteSet;
         this.currentSheet = spriteSet.get("placeholder");
         this.currentAnimationName = "placeholder";
+        this.gridSize = object.getSize();
     }
 
     public BufferedImage getSprite(){
             if(currentSheet != null){
                 return (currentSheet.getSheet()).getSubimage(
-                        frameIndex * gridSize,
-                        directionIndex * gridSize,
-                        gridSize,
-                        gridSize);
+                        frameIndex * gridSize.getWidth(),
+                        directionIndex * gridSize.getHeight(),
+                        gridSize.getWidth(),
+                        gridSize.getHeight());
             }
         return null;
     }
@@ -54,7 +57,6 @@ public class Animation {
             this.currentSheet = spriteSet.get(name);
             this.currentAnimationName = name;
             if(currentSheet != null){
-                this.gridSize = currentSheet.getSubImagePixels();
                 this.animationHoldFrames = currentSheet.getAnimationSpeed();
             }
             this.frameIndex = 0;

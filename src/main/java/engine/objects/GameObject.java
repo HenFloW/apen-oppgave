@@ -15,13 +15,13 @@ public abstract class GameObject {
     protected Position position;
     protected Position objectPoint;
     protected Collider2D collider;
-
     protected List<GameObject> children;
     private ArrayList<GameObject> childRemoveQueue;
     private GameObject parent;
 
     public boolean destructable;
     public boolean collideable = true;
+    protected int health = 100;
 
     public GameObject(){
         this.position = new Position(0,0);

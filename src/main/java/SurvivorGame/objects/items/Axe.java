@@ -30,7 +30,7 @@ public class Axe extends Item {
                         .getFileFromKey("sprites/items/axe", "item"));
 
         this.sprite = Scalr.resize(sprite, Scalr.Method.ULTRA_QUALITY, 50);
-        this.animation = new Animation(s);
+        this.animation = new Animation(s, this);
         this.animation.playAnimation("axe_idle");
 
         this.position = new Position(350, 350);
