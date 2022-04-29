@@ -26,6 +26,7 @@ public abstract class GameState {
     protected DisplayWindow display;
 
     public DebugController debugController;
+    private double currentTime;
 
     public GameState(Input input, DisplayWindow display){
         this.input = input;
@@ -42,6 +43,7 @@ public abstract class GameState {
     public void update(){
         camera.update(this);
         debugController.update();
+        currentTime = System.currentTimeMillis();
     }
 
     public List<GameObject> getGameObjects() {
@@ -83,5 +85,9 @@ public abstract class GameState {
             this.gameObjects.removeAll(objRemoveQueue);
             this.objRemoveQueue = new ArrayList<>();
         }
+    }
+
+    public double currentTime() {
+        return currentTime;
     }
 }

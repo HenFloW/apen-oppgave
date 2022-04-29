@@ -1,8 +1,9 @@
 package engine.display;
 
 import SurvivorGame.map.GameMap;
-import SurvivorGame.objects.entities.Rock;
-import SurvivorGame.objects.entities.TreeEntity;
+import SurvivorGame.objects.entities.nature.Rock;
+import SurvivorGame.objects.entities.nature.TreeEntity;
+import SurvivorGame.objects.entities.player.Player;
 import engine.core.math.Position;
 import engine.game.GameState;
 import engine.game.IGame;
@@ -41,7 +42,7 @@ public class Renderer {
         Camera cam = state.getCamera();
         for(var obj : state.getGameObjects().stream()
                 .filter(cam::isInView)
-                .filter(gameObject -> gameObject instanceof MovingEntity)
+                .filter(gameObject -> gameObject instanceof Player)
                 .toArray()) {
 
             graphics.setColor(Color.RED);

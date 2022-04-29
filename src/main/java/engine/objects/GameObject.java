@@ -3,6 +3,7 @@ package engine.objects;
 import engine.core.math.Position;
 import engine.core.math.Size;
 import engine.core.utils.Collider2D;
+import engine.core.utils.Health;
 import engine.game.GameState;
 
 import java.awt.*;
@@ -16,12 +17,13 @@ public abstract class GameObject {
     protected Position objectPoint;
     protected Collider2D collider;
     protected List<GameObject> children;
+    protected Health health;
+
     private ArrayList<GameObject> childRemoveQueue;
     private GameObject parent;
-
-    public boolean destructable;
+    public boolean destructible;
     public boolean collideable = true;
-    protected int health = 100;
+
 
     public GameObject(){
         this.position = new Position(0,0);
@@ -32,6 +34,8 @@ public abstract class GameObject {
 
         this.children = new ArrayList<>();
         this.childRemoveQueue = new ArrayList<>();
+
+        this.health = new Health(100);
     }
     
     public abstract void update(GameState state);
@@ -40,6 +44,9 @@ public abstract class GameObject {
 
     public abstract void action(GameState state, GameObject other);
 
+    public Size getSize() {
+        return this.size;
+    }
     public abstract BufferedImage getSprite();
 
     public void drawSprite(Graphics g, BufferedImage image){
@@ -52,20 +59,22 @@ public abstract class GameObject {
         return position;
     }
 
+    public void setPosition(Position pos) {
+        this.position = pos;
+        this.collider.update(this);
+        this.objectPoint.update(this);
+    }
+
     public Collider2D getCollider() {
         return collider;
     }
 
-    public Position getObjectPoint() {
-        return objectPoint;
-    }
-
-    public Size getSize() {
-        return this.size;
-    }
-
     public boolean isColliding(GameObject other){
         return this.collider.intersects(other.getCollider());
+    }
+
+    public Position getObjectPoint() {
+        return objectPoint;
     }
 
     public void setParent(GameObject parent) {

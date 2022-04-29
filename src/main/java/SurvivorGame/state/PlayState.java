@@ -1,13 +1,14 @@
 package SurvivorGame.state;
 
+import SurvivorGame.objects.entities.zombie.NPCcontroller;
+import SurvivorGame.objects.entities.zombie.Zombie;
 import engine.controller.Input;
 import SurvivorGame.objects.entities.player.PlayerController;
-import engine.core.math.Position;
 import engine.core.math.Size;
 import engine.display.DisplayWindow;
 import SurvivorGame.map.GameMap;
-import SurvivorGame.objects.entities.Rock;
-import SurvivorGame.objects.entities.TreeEntity;
+import SurvivorGame.objects.entities.nature.Rock;
+import SurvivorGame.objects.entities.nature.TreeEntity;
 import SurvivorGame.objects.entities.player.Player;
 import engine.game.GameState;
 import engine.objects.GameObject;
@@ -31,33 +32,29 @@ public class PlayState extends GameState {
     private void initGameObjects(){
         this.gameMap = new GameMap(new Size(40, 25), resourceLibrary);
         this.player = new Player(resourceLibrary, new PlayerController(input), this);
+        player.setPosition(gameMap.getRandomPosition());
+
         this.camera.setFocus(player);
 
-
         gameObjects.add(player);
-
-
         for (int i = 0; i < 10; i++) {
-            Position pos = new Position(Math.random()*gameMap.getWidth(),Math.random()*gameMap.getHeight());
-            GameObject tree = new TreeEntity(resourceLibrary, pos);
-            while(!gameMap.isOnGrid(tree)){
-                pos = new Position(Math.random()*gameMap.getWidth(),Math.random()*gameMap.getHeight());
-                tree = new TreeEntity(resourceLibrary, pos);
-            }
-            gameObjects.add(new TreeEntity(resourceLibrary, pos));
-        }
-        for (int i = 0; i < 10; i++) {
-            Position pos = new Position(Math.random()*gameMap.getWidth(),Math.random()*gameMap.getHeight());
-            GameObject rock = new Rock(resourceLibrary, pos);
-            while(!gameMap.isOnGrid(rock)){
-                pos = new Position(Math.random()*gameMap.getWidth(),Math.random()*gameMap.getHeight());
-                rock = new TreeEntity(resourceLibrary, pos);
-            }
-            gameObjects.add(new Rock(resourceLibrary, pos));
+            GameObject tree = new TreeEntity(resourceLibrary, gameMap.getRandomPosition());
+            gameObjects.add(tree);
         }
 
+        for (int i = 0; i < 15; i++) {
+            Zombie zombie = new Zombie(new NPCcontroller(), resourceLibrary);
+            zombie.setPosition(gameMap.getRandomPosition());
+            gameObjects.add(zombie);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            GameObject rock = new Rock(resourceLibrary, gameMap.getRandomPosition());
+            gameObjects.add(rock);
+        }
 
         Axe axe = new Axe(this);
+        axe.setPosition(gameMap.getRandomPosition());
         gameObjects.add(axe);
     }
 

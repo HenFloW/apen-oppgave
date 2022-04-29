@@ -12,6 +12,7 @@ import engine.gfx.ResourceLibrary;
 import engine.gfx.SpriteSet;
 import engine.objects.Action;
 import engine.objects.GameObject;
+import engine.objects.Item;
 
 import java.util.Optional;
 
@@ -39,17 +40,27 @@ public abstract class MovingEntity extends GameObject {
     public void update(GameState state) {
         handleAction(state);
         handleMovement(state);
-    }
 
-    private void handleChildren(GameState state) {
-        if(!children.isEmpty()){
-            children.forEach(gameObject -> gameObject.update(state));
-        }
+        collider.update(this);
+        objectPoint.update(this);
     }
 
     private void handleMovement(GameState state) {
         if(action.isEmpty()){
-            movement.update(controller);
+            for(Object obj : state.getGameObjects().stream()
+                    .filter(gameObject -> !gameObject.equals(this))
+                    .filter(gameObject -> gameObject.getCollider().intersects(collider)).toArray()) {
+                if (obj instanceof GameObject other && !(obj instanceof Item)) {
+                    this.position.applyVector(objectPoint.vectorBetween(other.getObjectPoint()).normalize().invert());
+                    this.collider.update(this);
+                    if(other instanceof MovingEntity){
+                        other.getPosition().applyVector(other.getObjectPoint().vectorBetween(objectPoint).normalize().invert());
+                        other.getCollider().update(other);
+                    }
+                }
+            }
+
+            movement.update(controller, this);
 
             if(collideable){
                 CollidingUTIL collisions = checkForCollisions(state, movement.getVector());
@@ -78,15 +89,16 @@ public abstract class MovingEntity extends GameObject {
     private CollidingUTIL checkForCollisions(GameState state, Vector2D movement) {
         Camera cam = state.getCamera();
         CollidingUTIL colliding = new CollidingUTIL();
-        for (Object obj : state.getGameObjects().stream().filter(cam::isInView).filter(gameObject -> gameObject.collideable).toArray()) {
-            if(obj != this){
-                if(obj instanceof GameObject gameObject){
-                    if(collider.getOffsetCollider(movement.intX(), 0d).intersects(gameObject.getCollider())){
-                        colliding.setX(true);
-                    }
-                    if(collider.getOffsetCollider(0d, movement.intY()).intersects(gameObject.getCollider())){
-                        colliding.setY(true);
-                    }
+        for (Object obj :state.getGameObjects().stream()
+                .filter(gameObject -> !gameObject.equals(this))
+                .filter(cam::isInView)
+                .filter(gameObject -> gameObject.collideable).toArray()) {
+            if(obj instanceof GameObject gameObject){
+                if (collider.getOffsetCollider(movement.intX(), 0d).intersects(gameObject.getCollider())) {
+                    colliding.setX(true);
+                }
+                if (collider.getOffsetCollider(0d, movement.intY()).intersects(gameObject.getCollider())) {
+                    colliding.setY(true);
                 }
             }
         }
@@ -110,9 +122,11 @@ public abstract class MovingEntity extends GameObject {
         return animation;
     }
 
-    public void preform(Action action){
-        this.action = Optional.of(action);
-        this.animation.playAnimation(objectName+"_"+this.action.get().getAnimationName());
-        this.animation.restartAnimation();
+    public void preform(GameState state, Action action){
+        if(this.action.isEmpty()){
+            this.action = Optional.of(action);
+            this.animation.playAnimation(objectName+"_"+this.action.get().getAnimationName());
+            this.animation.restartAnimation();
+        }
     }
 }

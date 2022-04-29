@@ -36,17 +36,17 @@ public class Player extends MovingEntity {
                 resourceLibrary
                         .getFilesFromTreeNode("sprites/entities/main_character"));
 
-        spriteSet.get("man_walking").setAnimationSpeed(6);
-        spriteSet.get("man_running").setAnimationSpeed(5);
-        spriteSet.get("man_idle").setAnimationSpeed(10);
-        spriteSet.get("man_action").setAnimationSpeed(4);
+        spriteSet.get(objectName+"_walking").setAnimationSpeed(6);
+        spriteSet.get(objectName+"_running").setAnimationSpeed(5);
+        spriteSet.get(objectName+"_idle").setAnimationSpeed(10);
+        spriteSet.get(objectName+"_action").setAnimationSpeed(4);
 
         this.animation = new Animation(spriteSet, this);
-        this.animation.playAnimation("man_idle");
+        this.animation.playAnimation(objectName+"_idle");
         this.animation.update(direction);
 
         this.position = new Position(400, 400);
-        this.objectPoint = position.getOffsetPosition(50, 75);
+        this.objectPoint.setOffset(50,75);
 
         this.collider.setOffsets(40,55);
         this.collider.setSize(20, 25);
@@ -66,25 +66,25 @@ public class Player extends MovingEntity {
         if(action.isEmpty()){
             if (movement.isMoving()){
                 if (playerController.requestingShift()){
-                    animation.playAnimation("man_running");
+                    animation.playAnimation(objectName+"_running");
                     animationState = "running";
                     movement.setSpeed(5f);
                 } else {
-                    animation.playAnimation("man_walking");
+                    animation.playAnimation(objectName+"_walking");
                     animationState = "walking";
                     movement.setSpeed(2f);
                 }
             } else {
-                animation.playAnimation("man_idle");
+                animation.playAnimation(objectName+"_idle");
                 animationState = "idle";
             }
 
             if(playerController.requestingK_F()){
-                preform(new Dropping());
+                preform(state, new Dropping());
             }
 
             if(playerController.requestingK_E()){
-                preform(new UseAction());
+                preform(state, new UseAction());
                 state.getGameObjects().stream()
                         .filter(gameObject -> !gameObject.equals(this))
                         .filter(gameObject -> !children.contains(gameObject))

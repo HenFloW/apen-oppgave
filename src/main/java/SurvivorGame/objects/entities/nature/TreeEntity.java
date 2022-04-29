@@ -1,4 +1,4 @@
-package SurvivorGame.objects.entities;
+package SurvivorGame.objects.entities.nature;
 
 import SurvivorGame.objects.entities.player.Player;
 import SurvivorGame.objects.entities.player.actions.UseAction;
@@ -16,7 +16,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class TreeEntity extends GameObject {
-    private int health;
     private BufferedImage sprite;
     private Animation animation;
     private int stage;
@@ -36,25 +35,21 @@ public class TreeEntity extends GameObject {
         this.collider = new Collider2D(this);
         this.collider.setOffsets(140, 225);
         this.collider.setSize(20, 15);
-        this.destructable = true;
-        this.health = 100;
+        this.destructible = true;
         this.stage = 5;
+        this.health.setOffsets(new Size(100,150));
     }
 
     @Override
     public void update(GameState state) {
         treeStageCheck(state);
+        health.update(state);
     }
 
     @Override
     public void render(Graphics g) {
         drawSprite(g,animation.getSprite());
-        if(health < 100){
-            g.setColor(Color.red);
-            g.drawRect(100,150,100, 4);
-            g.setColor(Color.green);
-            g.fillRect(100,150, Math.max(health, 0), 5);
-        }
+        health.render(g);
     }
 
     @Override
@@ -63,9 +58,9 @@ public class TreeEntity extends GameObject {
             if(player.getAction().isPresent()){
                 if(player.getAction().get() instanceof UseAction){
                     if(player.getChildren().stream().anyMatch(c -> c instanceof Axe)) {
-                        health -= 25;
+                        health.damage(20);
                     } else {
-                        health -= 5;
+                        health.damage(5);
                     }
                 }
             }
@@ -78,23 +73,26 @@ public class TreeEntity extends GameObject {
     }
 
     private void treeStageCheck(GameState state){
-        if(health <= 80 && stage == 5){
+        int hp = health.getHp();
+        int maxHp = health.getMaxHealth();
+
+        if(hp <=  maxHp * .8 && stage == 5){
             stage = 4;
             animation.playAnimation("tree80");
         }
-        if(health <= 60 && stage == 4){
+        if(hp <=  maxHp * .6 && stage == 4){
             stage = 3;
             animation.playAnimation("tree60");
         }
-        if(health <= 40 && stage == 3){
+        if(hp <=  maxHp * .4 && stage == 3){
             stage = 2;
             animation.playAnimation("tree40");
         }
-        if(health <= 20 && stage == 2){
+        if(hp <=  maxHp * .2 && stage == 2){
             stage = 1;
             animation.playAnimation("tree20");
         }
-        if(health <= 0 && stage == 1){
+        if(hp <=  0 && stage == 1){
             state.removeGameObject(this);
         }
     }

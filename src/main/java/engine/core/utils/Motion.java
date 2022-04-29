@@ -2,6 +2,8 @@ package engine.core.utils;
 
 import engine.controller.Controllable;
 import engine.core.math.Vector2D;
+import engine.objects.GameObject;
+import engine.objects.moving.MovingEntity;
 
 
 public class Motion {
@@ -14,7 +16,7 @@ public class Motion {
         this.vector = new Vector2D(0,0);
     }
 
-    public void update(Controllable controller){
+    public void update(Controllable controller, MovingEntity entity){
         Vector2D localVector = new Vector2D(0,0);
 
         if(controller.requestingUp()){
@@ -59,5 +61,9 @@ public class Motion {
 
     public void effectSpeed(int parseInt) {
         effectSpeed = parseInt;
+    }
+
+    public double getSpeed() {
+        return speed;
     }
 }

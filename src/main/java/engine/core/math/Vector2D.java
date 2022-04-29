@@ -49,6 +49,10 @@ public class Vector2D {
         return new Vector2D(nx, ny);
     }
 
+    public Vector2D invert() {
+        return new Vector2D(-x, -y);
+    }
+
     @Override
     public String toString() {
         DecimalFormat df = new DecimalFormat("0.0###");
@@ -57,4 +61,5 @@ public class Vector2D {
                 ", y=" + df.format(y).replace(',', '.') +
                 '}';
     }
+
 }

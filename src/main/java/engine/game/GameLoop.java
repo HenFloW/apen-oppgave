@@ -12,7 +12,7 @@ public class GameLoop implements Runnable{
     private boolean running;
     public final double updatesPerSec = 1.0d / 60.0d;
 
-    private int fps, ups;
+    private int fps;
     private long nextStatTime;
 
     /**
@@ -46,9 +46,8 @@ public class GameLoop implements Runnable{
                 update();
                 render();
                 timeAccumulator -= updatesPerSec;
-                printStats();
             }
-
+            printStats();
             lastUpdate = currentTime;
         }
     }
@@ -73,6 +72,5 @@ public class GameLoop implements Runnable{
     private void update() {
         game.update();
         game.cleanup();
-        ups++;
     }
 }

@@ -1,5 +1,6 @@
 package SurvivorGame.map;
 
+import engine.core.math.Position;
 import engine.core.math.Size;
 import engine.core.utils.Grid;
 import engine.gfx.ResourceLibrary;
@@ -25,14 +26,20 @@ public class GameMap extends Grid<Tile> {
         double objectX = object.getPosition().getX();
         double objectY = object.getPosition().getY();
 
-        double objectWidth = object.getSprite().getWidth();
-        double objectHeight = object.getSprite().getHeight();
+        double objectWidth = object.getSize().getWidth();
+        double objectHeight = object.getSize().getHeight();
 
         return objectX + objectWidth <= getWidth()
                 && objectX + objectHeight <= getHeight()
                 && objectX >= 0 && objectY >= 0;
     }
 
+    public Position getRandomPosition(){
+        double x = Math.random()*getWidth();
+        double y = Math.random()*getHeight();
+
+        return new Position(x,y);
+    }
     public int getTileSize() {
         return this.objectType.getSprite().getWidth();
     }

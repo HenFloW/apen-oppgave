@@ -68,11 +68,23 @@ public class Position {
         this.x += addVector.getX();
         this.y += addVector.getY();
     }
+    public void applyVector(Vector2D vector2D) {
+        this.x += vector2D.getX();
+        this.y += vector2D.getY();
+    }
 
     public void revert(Motion movement) {
         Vector2D addVector =  movement.getVector();
         this.x -= addVector.intX();
         this.y -= addVector.intY();
+    }
+
+    public double length(Position position) {
+        return Math.sqrt(Math.pow((position.getX()-x), 2)+Math.pow((position.getY()-y), 2));
+    }
+
+    public Vector2D vectorBetween(Position position) {
+        return new Vector2D(position.getX()-getX(), position.getY()-getY());
     }
 
     @Override
@@ -83,7 +95,4 @@ public class Position {
                 '}';
     }
 
-    public double length(Position position) {
-        return Math.sqrt(Math.pow((position.getX()-x), 2)+Math.pow((position.getY()-y), 2));
-    }
 }

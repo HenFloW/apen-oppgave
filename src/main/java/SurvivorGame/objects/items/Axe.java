@@ -3,7 +3,6 @@ package SurvivorGame.objects.items;
 import SurvivorGame.objects.entities.player.Player;
 import SurvivorGame.objects.entities.player.actions.Dropping;
 import SurvivorGame.objects.entities.player.actions.UseAction;
-import engine.core.math.Position;
 import engine.game.GameState;
 import engine.gfx.Animation;
 import engine.gfx.ImageUtils;
@@ -33,9 +32,6 @@ public class Axe extends Item {
         this.animation = new Animation(s, this);
         this.animation.playAnimation("axe_idle");
 
-        this.position = new Position(350, 350);
-
-        this.objectPoint = position.copyOf();
         this.objectPoint.setOffset(25,30);
 
         this.collider.update(this);
