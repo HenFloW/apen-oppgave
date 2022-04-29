@@ -50,7 +50,7 @@ public class Axe extends Item {
             if(localParent.getAction().isPresent()){
                 if(localParent.getAction().get() instanceof Dropping){
                     if(getParent() != null){
-                        getParent().childRemoveQueue(this);
+                        getParent().childRemove(this);
                         setParent(null);
                         this.objectPoint.update(this);
                         state.addGameObject(this);

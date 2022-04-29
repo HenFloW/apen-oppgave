@@ -2,8 +2,11 @@ package SurvivorGame.objects.entities.player;
 
 import SurvivorGame.objects.entities.player.actions.Dropping;
 import SurvivorGame.objects.entities.player.actions.UseAction;
+import SurvivorGame.objects.entities.zombie.Zombie;
 import engine.core.math.Position;
+import engine.core.math.Size;
 import engine.core.utils.Collider2D;
+import engine.core.utils.Health;
 import engine.game.GameState;
 import engine.gfx.ResourceLibrary;
 import engine.gfx.Animation;
@@ -13,7 +16,6 @@ import engine.objects.GameObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.Optional;
 
 public class Player extends MovingEntity {
@@ -29,23 +31,20 @@ public class Player extends MovingEntity {
 
     @Override
     protected void init(ResourceLibrary resourceLibrary) {
-
         objectName = "man";
 
         spriteSet.addSheet(
                 resourceLibrary
                         .getFilesFromTreeNode("sprites/entities/main_character"));
 
-        spriteSet.get(objectName+"_walking").setAnimationSpeed(6);
+        spriteSet.get(objectName+"_walking").setAnimationSpeed(7);
         spriteSet.get(objectName+"_running").setAnimationSpeed(5);
-        spriteSet.get(objectName+"_idle").setAnimationSpeed(10);
-        spriteSet.get(objectName+"_action").setAnimationSpeed(4);
+        spriteSet.get(objectName+"_idle").setAnimationSpeed(13);
+        spriteSet.get(objectName+"_action").setAnimationSpeed(5);
 
         this.animation = new Animation(spriteSet, this);
-        this.animation.playAnimation(objectName+"_idle");
-        this.animation.update(direction);
+        animation.update();
 
-        this.position = new Position(400, 400);
         this.objectPoint.setOffset(50,75);
 
         this.collider.setOffsets(40,55);
@@ -55,6 +54,12 @@ public class Player extends MovingEntity {
         this.actionCollider.setOffsets(20, 30);
         this.actionCollider.setSize(60,70);
 
+        this.health = new Health(300);
+        this.health.setOffsets(new Size(25, 5));
+        this.health.setSize(new Size(50,5));
+        this.health.setRegenSpeed(10);
+        this.health.setRegenAmount(50);
+
     }
 
     @Override
@@ -62,7 +67,6 @@ public class Player extends MovingEntity {
         super.update(state);
         actionCollider.update(this);
         var playerController = (PlayerController) controller;
-
         if(action.isEmpty()){
             if (movement.isMoving()){
                 if (playerController.requestingShift()){
@@ -114,7 +118,9 @@ public class Player extends MovingEntity {
 
     @Override
     public void render(Graphics g) {
+        animation.update();
         drawSprite(g,animation.getSprite());
+        health.render(g);
         for (GameObject child: this.children) {
             child.render(g);
         }
@@ -132,16 +138,9 @@ public class Player extends MovingEntity {
 
     @Override
     public void action(GameState state, GameObject other) {
-
-    }
-
-    @Override
-    public BufferedImage getSprite() {
-        return animation.getSprite();
-    }
-
-    public Animation getAnimation() {
-        return animation;
+        if(other instanceof Zombie zombie && zombie.getAction().isPresent()){
+            health.damage(10);
+        }
     }
 
     public String getAnimationState(){

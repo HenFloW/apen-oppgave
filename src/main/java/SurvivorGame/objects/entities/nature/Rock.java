@@ -6,6 +6,7 @@ import SurvivorGame.objects.items.Axe;
 import engine.core.math.Position;
 import engine.core.math.Size;
 import engine.core.utils.Collider2D;
+import engine.core.utils.Health;
 import engine.game.GameState;
 import engine.gfx.Animation;
 import engine.gfx.ResourceLibrary;
@@ -22,9 +23,8 @@ public class Rock extends GameObject{
 
     public Rock(ResourceLibrary resourceLibrary, Position position) {
         super();
-
         this.position = position;
-        this.objectPoint = position.getOffsetPosition(100, 160);
+        this.objectPoint.setOffset(100, 160);
         this.size = new Size(200, 200);
 
         SpriteSet sprites = new SpriteSet(resourceLibrary);
@@ -32,13 +32,14 @@ public class Rock extends GameObject{
         this.animation = new Animation(sprites, this);
         this.animation.playAnimation("rock100");
         this.sprite = animation.getSprite();
+        this.stage = 5;
 
         this.collider = new Collider2D(this);
-        this.stage = 5;
         this.collider.setOffsets(40, 135);
         this.collider.setSize(135, 30);
         this.destructible = true;
 
+        this.health = new Health(250);
         this.health.setOffsets(new Size(50,75));
         this.health.setRegenSpeed(10);
     }
@@ -46,7 +47,6 @@ public class Rock extends GameObject{
     @Override
     public void update(GameState state) {
         rockStageCheck(state);
-        health.update(state);
     }
 
     @Override
@@ -63,20 +63,15 @@ public class Rock extends GameObject{
                     if(player.getChildren().stream().anyMatch(c -> c instanceof Axe)) {
                         health.damage(25);
                     } else {
-                        health.damage(25);
+                        health.damage(5);
                     }
                 }
             }
         }
     }
 
-    @Override
-    public BufferedImage getSprite() {
-            return sprite;
-        }
-
     private void rockStageCheck(GameState state){
-        int hp = health.getHp();
+        int hp = health.hp();
         int maxHp = health.getMaxHealth();
 
         if(hp <=  maxHp * .8 && stage == 5){

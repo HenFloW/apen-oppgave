@@ -18,9 +18,11 @@ public abstract class GameObject {
     protected Collider2D collider;
     protected List<GameObject> children;
     protected Health health;
+    protected String objectName = "GameObject";
 
     private ArrayList<GameObject> childRemoveQueue;
     private GameObject parent;
+
     public boolean destructible;
     public boolean collideable = true;
 
@@ -38,21 +40,24 @@ public abstract class GameObject {
         this.health = new Health(100);
     }
     
-    public abstract void update(GameState state);
+    public void update(GameState state){
+        health.update(state);
+        collider.update(this);
+        objectPoint.update(this);
+    };
 
     public abstract void render(Graphics g);
 
     public abstract void action(GameState state, GameObject other);
 
-    public Size getSize() {
-        return this.size;
-    }
-    public abstract BufferedImage getSprite();
-
     public void drawSprite(Graphics g, BufferedImage image){
         if(image != null){
             g.drawImage(image,0,0,null);
         }
+    }
+
+    public Size getSize() {
+        return this.size;
     }
 
     public Position getPosition() {
@@ -85,32 +90,32 @@ public abstract class GameObject {
         return parent;
     }
 
-    public void addChild(GameObject child) {
-        this.children.add(child);
-    }
-
-    public void removeChildren(ArrayList<GameObject> children){
-        this.children.removeAll(children);
-        this.childRemoveQueue = new ArrayList<>();
-    }
-
-    public void childRemoveQueue(GameObject child){
-        this.getChildRemoveQueue().add(child);
-    }
-
-    public ArrayList<GameObject> getChildRemoveQueue(){
-        return this.childRemoveQueue;
-    }
-
     public List<GameObject> getChildren() {
         return children;
     }
 
-    @Override
-    public String toString() {
-        return "GameObject{" +
-                "position=" + position +
-                '}';
+    public void addChild(GameObject child) {
+        this.children.add(child);
     }
 
+    public void removeChildren(){
+        this.children.removeAll(childRemoveQueue);
+        this.childRemoveQueue = new ArrayList<>();
+    }
+
+    public void childRemove(GameObject child){
+        this.childRemoveQueue.add(child);
+    }
+    public ArrayList<GameObject> childRemoveQueue() {
+        return childRemoveQueue;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s{%s}", objectName, position);
+    }
+
+    public Health getHealth() {
+        return health;
+    }
 }

@@ -1,5 +1,6 @@
 package engine.game;
 
+import SurvivorGame.Survivor;
 import engine.controller.DebugController;
 import engine.controller.Input;
 import engine.core.math.Size;
@@ -9,6 +10,7 @@ import SurvivorGame.map.GameMap;
 import engine.gfx.ResourceLibrary;
 import engine.objects.GameObject;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +42,28 @@ public abstract class GameState {
         this.display = display;
     }
 
-    public void update(){
+    public void update(IGame game){
         camera.update(this);
         debugController.update();
         currentTime = System.currentTimeMillis();
+    }
+
+    public abstract void render(Graphics graphics);
+
+    public void cleanup() {
+        gameObjects.forEach(gameObject -> {;
+            if(!gameObject.childRemoveQueue().isEmpty()){
+                gameObject.removeChildren();
+            }
+        });
+        if(!objAddQueue.isEmpty()){
+            this.gameObjects.addAll(objAddQueue);
+            this.objAddQueue = new ArrayList<>();
+        }
+        if(!objRemoveQueue.isEmpty()){
+            this.gameObjects.removeAll(objRemoveQueue);
+            this.objRemoveQueue = new ArrayList<>();
+        }
     }
 
     public List<GameObject> getGameObjects() {
@@ -70,24 +90,12 @@ public abstract class GameState {
         objAddQueue.add(gameObject);
     }
 
-    public void cleanup() {
-        gameObjects.forEach(gameObject -> {
-            ArrayList<GameObject> local = gameObject.getChildRemoveQueue();
-            if(!local.isEmpty()){
-                gameObject.removeChildren(local);
-            }
-        });
-        if(!objAddQueue.isEmpty()){
-            this.gameObjects.addAll(objAddQueue);
-            this.objAddQueue = new ArrayList<>();
-        }
-        if(!objRemoveQueue.isEmpty()){
-            this.gameObjects.removeAll(objRemoveQueue);
-            this.objRemoveQueue = new ArrayList<>();
-        }
-    }
 
     public double currentTime() {
         return currentTime;
+    }
+
+    protected void setState(GameState playState) {
+
     }
 }

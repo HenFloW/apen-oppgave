@@ -38,10 +38,6 @@ public class Position {
         this.y = y;
     }
 
-    public Position getOffsetPosition(int x, int y){
-        return new Position(this.x + x, this.y + y);
-    }
-
     public void setOffset(int x, int y) {
         this.x += x;
         this.y += y;

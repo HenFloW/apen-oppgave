@@ -9,7 +9,11 @@ public class Collider2D extends Rectangle {
     private double offsetX = 0, offsetY = 0;
 
     public Collider2D(GameObject object) {
-        super(object.getPosition().intX(),object.getPosition().intY(), object.getSprite().getWidth(), object.getSprite().getHeight());
+        super(
+                object.getPosition().intX(),
+                object.getPosition().intY(),
+                object.getSize().getWidth(),
+                object.getSize().getHeight());
     }
 
     public Collider2D(int x, int y, int width, int height) {

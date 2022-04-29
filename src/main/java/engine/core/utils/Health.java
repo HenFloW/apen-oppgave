@@ -18,7 +18,6 @@ public class Health {
         this.regenAmount = 5;
         this.size = new Size(100,5);
         this.offsets = new Size(0,0);
-
     }
 
     public void damage(int hp){
@@ -26,16 +25,8 @@ public class Health {
         health -= hp;
     }
 
-    public int getHp() {
+    public int hp() {
         return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
     }
 
     public int getMaxHealth() {
@@ -54,12 +45,15 @@ public class Health {
         this.regenSpeed = regenSpeed;
     }
 
+    public void setRegenAmount(int i) {
+        this.regenAmount = i;
+    }
     public void render(Graphics g){
         if(health < maxHealth){
             g.setColor(Color.red);
-            g.drawRect(offsets.getHeight(), offsets.getWidth(), size.getWidth(), size.getHeight()-1);
+            g.drawRect(offsets.getWidth(), offsets.getHeight(), size.getWidth(), size.getHeight()-1);
             g.setColor(Color.green);
-            g.fillRect(offsets.getHeight(), offsets.getWidth(), Math.round((size.getWidth()/maxHealth)*health), size.getHeight());
+            g.fillRect(offsets.getWidth(), offsets.getHeight(), Math.max((int)(((double)size.getWidth()/(double)maxHealth)*health), 0), size.getHeight());
         }
     }
     public void update(GameState state){
@@ -68,4 +62,5 @@ public class Health {
             damageTime = state.currentTime();
         }
     }
+
 }

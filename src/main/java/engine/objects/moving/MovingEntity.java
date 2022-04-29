@@ -14,6 +14,7 @@ import engine.objects.Action;
 import engine.objects.GameObject;
 import engine.objects.Item;
 
+import java.util.List;
 import java.util.Optional;
 
 public abstract class MovingEntity extends GameObject {
@@ -25,7 +26,6 @@ public abstract class MovingEntity extends GameObject {
     protected Direction direction;
 
     protected String animationState;
-    protected String objectName;
 
     public MovingEntity(Controllable controller, ResourceLibrary resourceLibrary) {
         this.controller = controller;
@@ -38,29 +38,18 @@ public abstract class MovingEntity extends GameObject {
 
     @Override
     public void update(GameState state) {
+        super.update(state);
         handleAction(state);
         handleMovement(state);
-
-        collider.update(this);
-        objectPoint.update(this);
     }
 
     private void handleMovement(GameState state) {
         if(action.isEmpty()){
-            for(Object obj : state.getGameObjects().stream()
-                    .filter(gameObject -> !gameObject.equals(this))
-                    .filter(gameObject -> gameObject.getCollider().intersects(collider)).toArray()) {
-                if (obj instanceof GameObject other && !(obj instanceof Item)) {
-                    this.position.applyVector(objectPoint.vectorBetween(other.getObjectPoint()).normalize().invert());
-                    this.collider.update(this);
-                    if(other instanceof MovingEntity){
-                        other.getPosition().applyVector(other.getObjectPoint().vectorBetween(objectPoint).normalize().invert());
-                        other.getCollider().update(other);
-                    }
-                }
-            }
+            handleCollidingEntities(state.getGameObjects());
 
-            movement.update(controller, this);
+            if(controller != null){
+                movement.update(controller, this);
+            }
 
             if(collideable){
                 CollidingUTIL collisions = checkForCollisions(state, movement.getVector());
@@ -71,19 +60,30 @@ public abstract class MovingEntity extends GameObject {
                     movement.setVY(0);
                 }
             }
+            if(movement.isMoving()) {
+                objectPoint.apply(movement);
+                position.apply(movement);
+                collider.update(this);
+
+                direction = Direction.fromVector(movement.getVector());
+                animation.setDirectionIndex(direction.getAnimationRow());
+            }
         }
+    }
 
-        if(movement.isMoving()) {
-            objectPoint.apply(movement);
-            position.apply(movement);
-            collider.update(this);
-
-            direction = Direction.fromVector(movement.getVector());
-            animation.update(direction);
-        } else {
-            animation.update();
+    private void handleCollidingEntities(List<GameObject> gameObjects) {
+        for(Object obj : gameObjects.stream()
+                .filter(gameObject -> !gameObject.equals(this))
+                .filter(gameObject -> gameObject.getCollider().intersects(collider)).toArray()) {
+            if (obj instanceof GameObject other && !(obj instanceof Item)) {
+                this.position.applyVector(objectPoint.vectorBetween(other.getObjectPoint()).normalize().invert());
+                this.collider.update(this);
+                if(other instanceof MovingEntity){
+                    other.getPosition().applyVector(other.getObjectPoint().vectorBetween(objectPoint).normalize().invert());
+                    other.getCollider().update(other);
+                }
+            }
         }
-
     }
 
     private CollidingUTIL checkForCollisions(GameState state, Vector2D movement) {

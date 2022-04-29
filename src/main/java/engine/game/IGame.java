@@ -19,4 +19,6 @@ public interface IGame {
     void cleanup();
 
     GameState getGameState();
+
+    void changeGameState(GameState state);
 }

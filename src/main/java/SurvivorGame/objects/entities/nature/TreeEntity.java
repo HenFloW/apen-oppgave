@@ -23,7 +23,7 @@ public class TreeEntity extends GameObject {
     public TreeEntity(ResourceLibrary resourceLibrary, Position position) {
         super();
         this.position = position;
-        this.objectPoint = position.getOffsetPosition(150, 240);
+        this.objectPoint.setOffset(150, 240);
         this.size = new Size(300, 300);
 
         SpriteSet sprites = new SpriteSet(resourceLibrary);
@@ -31,12 +31,13 @@ public class TreeEntity extends GameObject {
         this.animation = new Animation(sprites, this);
         this.animation.playAnimation("tree100");
         this.sprite = animation.getSprite();
+        this.stage = 5;
 
         this.collider = new Collider2D(this);
         this.collider.setOffsets(140, 225);
         this.collider.setSize(20, 15);
         this.destructible = true;
-        this.stage = 5;
+
         this.health.setOffsets(new Size(100,150));
     }
 
@@ -67,13 +68,8 @@ public class TreeEntity extends GameObject {
         }
     }
 
-    @Override
-    public BufferedImage getSprite() {
-        return sprite;
-    }
-
     private void treeStageCheck(GameState state){
-        int hp = health.getHp();
+        int hp = health.hp();
         int maxHp = health.getMaxHealth();
 
         if(hp <=  maxHp * .8 && stage == 5){

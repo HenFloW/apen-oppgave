@@ -1,16 +1,20 @@
 package SurvivorGame.objects.entities.zombie;
 
+import SurvivorGame.objects.entities.player.Player;
 import SurvivorGame.objects.entities.player.actions.UseAction;
+import SurvivorGame.objects.items.Axe;
 import SurvivorGame.state.PlayState;
 import engine.controller.Controllable;
 import engine.core.math.Direction;
 import engine.core.math.Position;
+import engine.core.math.Size;
 import engine.core.math.Vector2D;
 import engine.game.GameState;
 import engine.gfx.Animation;
 import engine.gfx.ResourceLibrary;
 import engine.objects.Action;
 import engine.objects.GameObject;
+import engine.objects.Item;
 import engine.objects.moving.MovingEntity;
 
 import java.awt.*;
@@ -31,34 +35,47 @@ public class Zombie extends MovingEntity {
                 resourceLibrary
                         .getFilesFromTreeNode("sprites/entities/zombie"));
 
-        spriteSet.get(objectName+"_walking").setAnimationSpeed(15);
-        spriteSet.get(objectName+"_running").setAnimationSpeed(10);
-        spriteSet.get(objectName+"_idle").setAnimationSpeed(15);
-        spriteSet.get(objectName+"_action").setAnimationSpeed(10);
+        spriteSet.get(objectName+"_walking").setAnimationSpeed(7);
+        spriteSet.get(objectName+"_running").setAnimationSpeed(5);
+        spriteSet.get(objectName+"_idle").setAnimationSpeed(13);
+        spriteSet.get(objectName+"_action").setAnimationSpeed(5);
 
         this.animation = new Animation(spriteSet, this);
-        this.animation.playAnimation(objectName+"_idle");
+        animation.update();
 
         this.objectPoint.setOffset(50, 75);
 
         this.collider.setOffsets(40,55);
         this.collider.setSize(20, 25);
+
+        this.health.setOffsets(new Size(25, 5));
+        this.health.setSize(new Size(50,5));
     }
 
     @Override
     public void render(Graphics g) {
+        animation.update();
         drawSprite(g, animation.getSprite());
+        health.render(g);
     }
 
     @Override
     public void action(GameState state, GameObject other) {
-
+        if(other instanceof Player player){
+            if(player.getChildren().stream().anyMatch(gameObject -> gameObject instanceof Axe)){
+                health.damage(50);
+            } else {
+                health.damage(25);
+            }
+        }
     }
 
     @Override
     public void update(GameState state) {
         super.update(state);
-
+        if(health.hp() <= 0){
+            state.removeGameObject(this);
+        }
         if(action.isEmpty()){
             if(state instanceof PlayState playState){
                 Position playerPos = playState.player.getObjectPoint();
@@ -73,6 +90,7 @@ public class Zombie extends MovingEntity {
                     } else {
                         if(state.getGameObjects().stream()
                                 .filter(gameObject -> !gameObject.equals(this))
+                                .filter(gameObject -> !(gameObject instanceof Item))
                                 .anyMatch(gameObject -> gameObject.getCollider().intersects(collider))){
                             movement.stop();
                         } else {
@@ -84,7 +102,7 @@ public class Zombie extends MovingEntity {
                                 movement.setSpeed(1);
                                 animation.playAnimation(objectName+"_walking");
                             }
-                            animation.update(direction);
+                            animation.setDirectionIndex(direction.getAnimationRow());
                             vector2D = vector2D.multiplied(movement.getSpeed());
 
                             this.movement.setVX(vector2D.getX());
@@ -103,11 +121,6 @@ public class Zombie extends MovingEntity {
                 }
             }
         }
-    }
-
-    @Override
-    public BufferedImage getSprite() {
-        return animation.getSprite();
     }
 
     @Override

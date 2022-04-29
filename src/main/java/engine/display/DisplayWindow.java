@@ -2,7 +2,9 @@ package engine.display;
 
 import engine.controller.Input;
 import engine.core.math.Size;
+import engine.game.GameState;
 import engine.game.IGame;
+import engine.objects.GameObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,14 +52,14 @@ public class DisplayWindow extends JFrame {
     /**
      * this function does all the rendering logic of a scene depending on the state it gets
      * it also call for the renderer render which is in charge drawing all the games objects
-     * @param game
+     * @param state
      */
-    public void render(IGame game) {
+    public void render(GameState state) {
         BufferStrategy bufferStrategy = canvas.getBufferStrategy();
         Graphics graphics = bufferStrategy.getDrawGraphics();
 
-        renderer.render(game, graphics);
-
+        renderer.render(state, graphics);
+        state.render(graphics);
         graphics.dispose();
         bufferStrategy.show();
     }

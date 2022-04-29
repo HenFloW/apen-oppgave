@@ -62,13 +62,8 @@ public class ResourceLibrary {
         return file.list((current,name) -> new File(current, name).isDirectory());
     }
 
-    public Dict getFiles() {
-        return files;
-    }
-
     public File getFileFromKey(String path, String keyName){
-        File f = getFilesFromTreeNode(path).key(keyName);
-        return f;
+        return getFilesFromTreeNode(path).key(keyName);
     }
     public Dict<String, File> getFilesFromTreeNode(String path) {
         String[] dir = path.split("/");

@@ -4,9 +4,9 @@ import SurvivorGame.map.GameMap;
 import SurvivorGame.objects.entities.nature.Rock;
 import SurvivorGame.objects.entities.nature.TreeEntity;
 import SurvivorGame.objects.entities.player.Player;
+import SurvivorGame.state.PlayState;
 import engine.core.math.Position;
 import engine.game.GameState;
-import engine.game.IGame;
 import engine.objects.GameObject;
 import engine.objects.Item;
 import engine.objects.moving.MovingEntity;
@@ -16,26 +16,26 @@ import java.awt.image.BufferedImage;
 import java.util.Comparator;
 
 public class Renderer {
-    private final int VIEW_BOUND_PERIMETER = 1;
-    private GameState state;
 
     public Renderer() {}
 
-    public void render(IGame game, Graphics graphics){
-        this.state = game.getGameState();
-        renderMap(state, graphics);
-        renderObjects(state, graphics);
+    public void render(GameState state, Graphics graphics){
+        if(state instanceof PlayState){
+            renderMap(state, graphics);
+            renderObjects(state, graphics);
 
-        if(state.debugController.renderLines){
-            renderLines(state, graphics);
+            if(state.debugController.renderLines){
+                renderLines(state, graphics);
+            }
+            if(state.debugController.renderColliders){
+                renderBoxColliders(state, graphics);
+            }
+            if(state.debugController.renderObjectPoint) {
+                renderPositions(state, graphics);
+            }
+        } else {
+            state.render(graphics);
         }
-        if(state.debugController.renderColliders){
-            renderBoxColliders(state, graphics);
-        }
-        if(state.debugController.renderObjectPoint) {
-            renderPositions(state, graphics);
-        }
-
     }
 
     private void renderLines(GameState state, Graphics graphics) {
@@ -74,8 +74,7 @@ public class Renderer {
         sortByPosition(state);
         state.getGameObjects().stream()
                 .filter(cam::isInView)
-                .forEach(gameObject ->
-                                graphics.drawOval(
+                .forEach(gameObject -> graphics.drawOval(
                                         gameObject.getObjectPoint().intX() - cam.getPosition().intX()-1,
                                         gameObject.getObjectPoint().intY() - cam.getPosition().intY()-1,
                                         3,
@@ -90,24 +89,23 @@ public class Renderer {
 
             graphics.setColor(Color.RED);
 
-            for (var other : state.getGameObjects().stream()
-                    .filter(cam::isInView)
-                    .filter(gameObject -> !gameObject.equals(obj))
-                    .filter(gameObject -> gameObject instanceof MovingEntity)
-                    .toArray()) {
-                if (((GameObject) other).isColliding((GameObject) obj) && !(((GameObject) obj) instanceof Item)) {
-                    graphics.setColor(Color.green);
-                }
+            if(obj instanceof GameObject gameObj)
+                for (var other : state.getGameObjects().stream()
+                        .filter(cam::isInView)
+                        .filter(gameObject -> !gameObject.equals(obj))
+                        .filter(gameObject -> gameObject instanceof MovingEntity).toArray()) {
+                    if(other instanceof GameObject otherObject){
+                        if (gameObj.isColliding(otherObject) && !(gameObj instanceof Item)) {
+                            graphics.setColor(Color.green);
+                        }
+                    }
+
+                    graphics.drawRect(
+                            gameObj.getCollider().x - cam.getPosition().intX(),
+                            gameObj.getCollider().y - cam.getPosition().intY(),
+                            gameObj.getCollider().width,
+                            gameObj.getCollider().height);
             }
-
-            GameObject gameObject = ((GameObject) obj);
-
-
-            graphics.drawRect(
-                    gameObject.getCollider().x - cam.getPosition().intX(),
-                    gameObject.getCollider().y - cam.getPosition().intY(),
-                    gameObject.getCollider().width,
-                    gameObject.getCollider().height);
         }
     }
 
@@ -144,7 +142,9 @@ public class Renderer {
                 camX + (int)(cam.getViewBound().getWidth() / gameMap.getTileSize()),
                 camY + (int)(cam.getViewBound().getHeight() / gameMap.getTileSize()));
 
-        for (int y = cameraStart.intY(); y < cameraEnd.getY()+VIEW_BOUND_PERIMETER; y++) {
+        int VIEW_BOUND_PERIMETER = 1;
+
+        for (int y = cameraStart.intY(); y < cameraEnd.getY()+ VIEW_BOUND_PERIMETER; y++) {
             for (int x = cameraStart.intX(); x < cameraEnd.intX() + VIEW_BOUND_PERIMETER; x++) {
                 if(x < gameMap.getCol() && y < gameMap.getRow())
                 {

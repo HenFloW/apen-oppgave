@@ -10,7 +10,7 @@ public class ImageSheet {
         this.image = image;
         this.animationSpeed = animationSpeed;
         this.subImagePixels = subImagePixels;
-        this.frameCount = ((BufferedImage)this.image).getWidth()/this.subImagePixels - 1;
+        this.frameCount = (this.image).getWidth()/this.subImagePixels - 1;
     }
 
     public BufferedImage getSheet() {
@@ -23,10 +23,6 @@ public class ImageSheet {
 
     public void setAnimationSpeed(int animationSpeed) {
         this.animationSpeed = animationSpeed;
-    }
-
-    public int getSubImagePixels() {
-        return subImagePixels;
     }
 
     public int getFrameCount() {
