@@ -11,7 +11,7 @@ all the 50 zombies. if you die you can reset, and the same for victory, try to r
 this will give you additional damage to objects and zombies
 
 ###Blender
-![](Markdown/Images/BlenderTree.png)
+![](Docs/Images/BlenderTree.png)
 
 ###Example for the sprites for character
 ![](src/main/resources/sprites/entities/main_character/man_action.png)
